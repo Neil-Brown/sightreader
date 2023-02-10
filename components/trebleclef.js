@@ -2,7 +2,8 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Image, View, Pressable, StyleSheet, Text } from 'react-native';
 
-export default function RadioButton() {
+export default function RadioButton(props) {
+  console.log(props)
     return (
     <View style={styles.container}>
       <View style={styles.line }></View>
@@ -16,7 +17,7 @@ export default function RadioButton() {
       />
       <Image
         source={require("../img/note.png" )}
-        style={styles.note}
+        style={[styles.note, styles.noteVar(props.yPos)]}
       />
     </View>
 
@@ -51,6 +52,9 @@ const styles = StyleSheet.create({
    height:15,
    left:"50%",
    position: "absolute",
-    bottom: 43,
- }
+
+ },
+ noteVar:yPos => ({
+    bottom: yPos,
+})
 });

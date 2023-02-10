@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {useState, useEffect} from "react"
 
 import RadioButton from "./components/radiobutton"
@@ -8,6 +8,8 @@ import Button from "./components/button"
 
 export default function App() {
   const [option, setOption] = useState("Foo")
+  const [yPos, setYPos] = useState(43)
+
   const data = [
             {value: 'Treble' },
             {value:"Bass"},
@@ -17,11 +19,31 @@ export default function App() {
   useEffect(()=>{
     console.log(option)
 }, [option])
+
+function openSettings(){
+  console.log("pressed")
+}
+
+function foo(){
+  console.log("Submit")
+  setYPos(yPos+10)
+}
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <View style={styles.settings}>
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={() => openSettings()}>
+          <Image source={require("./img/settings.png")} style={styles.settingsIcon}/>
+        </TouchableOpacity>
+      <View style={styles.scoreScreen}>
+        <Text style={styles.score}>Score</Text>
+        <Text style={styles.count}>0 / 0</Text>
+      </View>
+      </View>
       <RadioButton  data={data} option={option} setOption={setOption} onSelect={(value) => setOption(value)}/>
-      <TrebleClef/>
+      <TrebleClef yPos={yPos}/>
       <View style={styles.controls}>
         <View style={styles.type}>
         <RadioButton  data={[{source:require("./img/sharp.png")}, {source:require("./img/flat.png")}]} option={option} setOption={setOption} onSelect={(value) => setOption(value)}/>
@@ -33,7 +55,7 @@ export default function App() {
             <Button title={"G"}/>
           </View>
         </View>
-        <Button title={"Submit"}/>
+        <Button title={"Submit"} onPress={foo}/>
       </View>
     </View>
   );
@@ -44,15 +66,33 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding:10
+    padding:10,
   },
   noteButtons:{
     flexDirection:"row",
     justifyContent:"space-around",
     width:"100%"
   },
-  type:{
-
+  settings:{
+    alignItems:"flex-end",
+    width:"100%",
+    padding:20
+  },
+  settingsButton:{
+    padding:5,
+    borderColor:"black",
+    borderWidth:1,
+    borderRadius:10
+  },
+  settingsIcon:{
+    height:30,
+    width:30,
+  },
+  scoreScreen:{
+    width:"100%",
+    alignItems:"center"
+  },
+  score:{
+    fontSize:20
   }
 });

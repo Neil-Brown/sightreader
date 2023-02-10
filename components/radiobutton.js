@@ -10,7 +10,7 @@ export default function RadioButton({ data, onSelect, option, fontSize=20, setOp
 	}
 	function renderImage({item}) {
     if (item.source) {
-        return <Image source={item.source} style={styles.ImageIconStyle}/>;
+        return <Image id={item.source} source={item.source} style={styles.ImageIconStyle}/>;
     }
      return <Text key={item.id} style={{color:"#000000", fontSize:fontSize}}> {item.value}</Text>;
 	 }
